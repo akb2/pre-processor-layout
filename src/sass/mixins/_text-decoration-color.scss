@@ -1,0 +1,8 @@
+// Стили подчеркнутой линии
+@mixin text-decoration-color ( $value ) {
+  -moz-text-decoration-color:       $value;
+  -ms-text-decoration-color:        $value;
+  -webkit-text-decoration-color:    $value;
+  -o-text-decoration-color:         $value;
+  text-decoration-color:            $value;
+}

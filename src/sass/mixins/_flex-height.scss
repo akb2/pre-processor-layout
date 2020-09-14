@@ -1,0 +1,11 @@
+// Flex ширина элемента
+@mixin flex-height ( $height, $min-height:-1, $max-height:-1, $flex-basis:-1 ) {
+  @if ( $min-height == -1 )     { $min-height: $height; }
+  @if ( $max-height == -1 )     { $max-height: $height; }
+  @if ( $flex-basis == -1 )     { $flex-basis: $height; }
+
+  height:               $height;
+  min-height:           $min-height;
+  max-height:           $max-height;
+  flex-basis:           $flex-basis;
+}

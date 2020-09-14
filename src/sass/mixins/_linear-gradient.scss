@@ -1,0 +1,11 @@
+// Линейный градиент
+@mixin linear-gradient ( $deg: 0deg, $innerColor: var(--color-back-slide-1), $from:0, $outerColor: var(--color-back-slide-2), $to:100% ) {
+  background-color: $outerColor;
+  background:       -webkit-gradient(linear, $deg, from($innerColor), to($outerColor));
+  background:       -webkit-linear-gradient($deg, $innerColor $from, $outerColor $to);
+  background:       -moz-linear-gradient($deg, $innerColor $from, $outerColor $to);
+  background:       -ms-linear-gradient($deg, $innerColor $from, $outerColor $to);
+  background:       -o-linear-gradient($deg, $innerColor $from, $outerColor $to);
+  background:       linear-gradient($deg, $innerColor $from, $outerColor $to);
+  filter:           progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#{$innerColor}', EndColorStr='#{$outerColor}');
+}

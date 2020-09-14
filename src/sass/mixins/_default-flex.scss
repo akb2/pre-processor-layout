@@ -1,0 +1,15 @@
+// Дефолтный FlexBox
+@mixin default-flex ( $direction:row, $wrap:nowrap, $justify:flex-start, $align:flex-start, $grow:0 ) {
+  display:            flex;
+  display:            -o-flex;
+  display:            -ms-flex;
+  display:            -moz-flex;
+  display:            -ms-flexbox;
+  display:            -webkit-flex;
+
+  flex-direction:     $direction;
+  flex-wrap:          $wrap;
+  justify-content:    $justify;
+  align-items:        $align;
+  flex-grow:          $grow;
+}

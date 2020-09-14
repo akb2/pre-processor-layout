@@ -1,0 +1,24 @@
+@function maps-get ( $map, $keys... ) {
+  $ret:     $map;
+
+  @each $key in $keys {
+
+    // Элемент является мэпом
+    @if ( type-of($ret) == 'map' ) {
+      @if ( map-get( $ret, $key ))
+        { $ret: map-get( $ret, $key ); }
+      @else
+        { $ret: map-get( $ret, default ); }
+    }
+
+    // Элемент является списком
+    @else if ( type-of($ret) == 'list' )
+      { $ret: nth( $ret, $key ); }
+
+    // Элемент не массив
+    @else
+      { $ret: null; }
+  }
+
+  @return   $ret;
+}

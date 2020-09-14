@@ -1,0 +1,10 @@
+// Круговой градиент
+@mixin radial-gradient ( $innerColor: var(--color-back-slide-1), $from:0, $outerColor: var(--color-back-slide-2), $to:100% ) {
+  background:       -moz-radial-gradient( center, circle cover, $innerColor $from, $outerColor $to );
+  background:       -webkit-gradient( radial, center center, $from, center center, $to, color-stop( $from, $innerColor ), color-stop( $to, $outerColor ) );
+  background:       -webkit-radial-gradient( center, circle cover, $innerColor $from, $outerColor $to );
+  background:       -o-radial-gradient( center, circle cover, $innerColor $from, $outerColor $to );
+  background:       -ms-radial-gradient( center, circle cover, $innerColor $from, $outerColor $to );
+  background:       radial-gradient( center, circle cover, $innerColor $from, $outerColor $to );
+  background-color: $outerColor;
+}

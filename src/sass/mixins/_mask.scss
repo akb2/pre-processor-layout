@@ -1,0 +1,12 @@
+// Маска картинка
+@mixin mask ( $image, $pos_x:center, $pos_y:center, $repeat:no-repeat, $size:contain ) {
+  -webkit-mask-image:       $image;
+  mask-image:               $image;
+  -webkit-mask-position-x:  $pos_x;
+  -webkit-mask-position-y:  $pos_y;
+  mask-position:            $pos_x $pos_y;
+  -webkit-mask-repeat:      $repeat;
+  mask-repeat:              $repeat;
+  -webkit-mask-size:        $size;
+  mask-size:                $size;
+}

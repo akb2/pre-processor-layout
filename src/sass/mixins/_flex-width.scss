@@ -1,0 +1,11 @@
+// Flex ширина элемента
+@mixin flex-width ( $width, $min-width:-1, $max-width:-1, $flex-basis:-1 ) {
+  @if ( $min-width == -1 )    { $min-width: $width; }
+  @if ( $max-width == -1 )    { $max-width: $width; }
+  @if ( $flex-basis == -1 )   { $flex-basis: $width; }
+
+  width:                $width;
+  min-width:            $min-width;
+  max-width:            $max-width;
+  flex-basis:           $flex-basis;
+}

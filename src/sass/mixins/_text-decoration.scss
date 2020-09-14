@@ -1,0 +1,19 @@
+// Продвинутый TEXT-DECORATION
+@mixin text-decoration ( $width:1px, $style:solid, $color:inherit, $space:0px, $opacity:1 ) {
+  display:          inline-block;
+  vertical-align:   top;
+  position:         relative;
+  overflow:         unset;
+
+  &:before {
+    content:          '';
+    position:         absolute;
+    top:              calc( 100% + #{$space} );
+    left:             0;
+    display:          block;
+    width:            100%;
+    height:           $width;
+    border-bottom:    $width $style $color;
+    opacity:          $opacity;
+  }
+}

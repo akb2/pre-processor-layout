@@ -1,0 +1,9 @@
+// Background для слайдера
+@mixin cover ( $size:cover, $pos_x:center, $pos_y:center, $color:transparent ) {
+  background-attachment:    scroll;
+  background-color:         $color;
+  background-size:          $size;
+  background-position-x:    $pos_x;
+  background-position-y:    $pos_y;
+  background-repeat:        no-repeat;
+}

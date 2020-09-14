@@ -1,0 +1,26 @@
+// Обрезать строки и добавить многоточие
+@mixin line-clamp ( $line, $lheight:var(--string-text-height), $height-important:0 ) {
+  $important: '';
+
+  @if ( $height-important == 1 )
+    { $important: '!important'; }
+
+
+  overflow:               hidden;
+  line-height:            #{$lheight} #{$important};
+  min-height:             #{$lheight} #{$important};
+  max-height:             $lheight * $line;
+
+
+  @if ( $line > 1 ) {
+    display:              -webkit-box;
+    -webkit-box-orient:   vertical;
+    -webkit-line-clamp:   $line;
+    white-space:          normal;
+  }
+
+  @else {
+    white-space:          nowrap;
+    text-overflow:        ellipsis;
+  }
+}
