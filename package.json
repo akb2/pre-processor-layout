@@ -1,0 +1,30 @@
+{
+  "name": "pre-processor-layout",
+  "version": "1.0.0",
+  "description": "My web-layouts project template",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akb2/pre-processor-layout.git"
+  },
+  "author": "akb2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akb2/pre-processor-layout/issues"
+  },
+  "homepage": "https://github.com/akb2/pre-processor-layout#readme",
+  "devDependencies": {
+    "css-loader": "^4.3.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {}
+}

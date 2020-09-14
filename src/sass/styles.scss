@@ -1,7 +1,9 @@
-@import 'config/colors';
+/*@import 'config/colors';
 @import 'config/vars';
 
+
 @import 'functions/maps-get';
+
 
 @import 'mixins/animation';
 @import 'mixins/box-shadow';
@@ -24,3 +26,12 @@
 @import 'mixins/transform';
 @import 'mixins/transition';
 @import 'mixins/user-select';
+
+
+@import 'styles/base';*/
+
+$bg-color: pink;
+
+body {
+ background: $bg-color;
+}
