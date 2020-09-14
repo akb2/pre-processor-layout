@@ -1,0 +1,9 @@
+{
+    "dist": "./.dist",
+    "pages": "",
+    "css":  "local/templates/__template_name__/css",
+    "js":  "local/templates/__template_name__/js",
+    "fonts":  "./.dist/local/templates/__template_name__/fonts",
+    "img":  "./.dist/local/templates/__template_name__/img",
+    "uploads":  "./.dist/uploads"
+}
