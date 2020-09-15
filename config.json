@@ -1,0 +1,15 @@
+{
+    "output": "./.dist",
+    "output_pages": "",
+    "output_css": "local/templates/__template_name__/css",
+    "output_js": "local/templates/__template_name__/js",
+    "output_fonts": "./.dist/local/templates/__template_name__/fonts",
+    "output_img": "./.dist/local/templates/__template_name__/img",
+    "output_uploads": "./.dist/uploads",
+
+    "output_css_name": "styles",
+    "output_js_name": "scripts",
+
+    "minify_css": true,
+    "minify_js": true
+}
