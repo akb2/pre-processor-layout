@@ -10,6 +10,8 @@
     "output_css_name": "styles",
     "output_js_name": "scripts",
 
+    "live_port": 9000,
+
     "minify_css": true,
     "minify_js": true
 }

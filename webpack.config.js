@@ -1,8 +1,12 @@
 // Webpack v4
 const path                      = require('path');
+const glob                      = require('glob');
 const MiniCssExtractPlugin      = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin            = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin         = require('html-webpack-plugin');
+const getLogger                 = require('webpack-log');
+const log                       = getLogger({ name: 'file' });
 
 const config                    = require('./config.json');
 
@@ -18,9 +22,25 @@ config.output_js_name           = config.output_js_name.length > 0? config.outpu
 
 // Проверка настроек
 module.exports = ( env, option ) => {
-    const production                = option.mode === 'production'? true: false;
+    const production = option.mode === 'production'? true: false;
 
 
+
+    // Поиск шаблонов PUG
+    let pluginsOptions = [];
+    const pages = glob.sync( __dirname + '\\src\\pug\\pages\\**\\*.pug' );
+    pages.forEach( function ( file) {
+        let base    = path.relative( __dirname + '\\src\\pug\\pages', file );
+            base    = base.replace( /\.pug$/, '' );
+
+        pluginsOptions.push(
+            new HtmlWebpackPlugin({
+                filename: config.output_pages + '/' + base + '.html',
+                template: './src/pug/pages/' + base + '.pug',
+                inject: true
+            })
+        );
+    });
 
     // Базовые настройки WebPack
     let webpack_config = {
@@ -37,13 +57,18 @@ module.exports = ( env, option ) => {
                     use: [
                         'babel-loader'
                     ]
-                },
-                {
+                }, {
                     test: /\.(css|scss|sass)$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         'css-loader',
                         'sass-loader',
+                    ]
+                }, {
+                    test: /\.pug$/,
+                    loaders: [
+                        'html-loader',
+                        'pug-html-loader?pretty=true'
                     ]
                 }
             ]
@@ -51,14 +76,23 @@ module.exports = ( env, option ) => {
         plugins: [
             new MiniCssExtractPlugin ({
                 filename: config.output_css + '/' + config.output_css_name + '.css'
-            })
+            }),
+            ...pluginsOptions
         ],
         optimization: {
             minimizer: []
+        },
+        devServer: {
+            index: 'index.html',
+            overlay: true,
+            stats: 'errors-only',
+            compress: true,
+            clientLogLevel: 'error',
+            open: true,
+            port: config.live_port,
+            hotOnly: true
         }
     }
-
-
 
     // Минификация JS
     if ( production === true & config.minify_js === true ) {
