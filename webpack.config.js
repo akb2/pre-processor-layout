@@ -5,10 +5,11 @@ const MiniCssExtractPlugin      = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin            = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin         = require('html-webpack-plugin');
+const CopyWebpackPlugin         = require('copy-webpack-plugin');
 const getLogger                 = require('webpack-log');
 const log                       = getLogger({ name: 'file' });
 
-const config                    = require('./config.json');
+const config                    = require('./config');
 
 // Проверка настроек
 config.output_css_name          = typeof config.output_css_name === 'string'? config.output_css_name: '';
@@ -22,25 +23,56 @@ config.output_js_name           = config.output_js_name.length > 0? config.outpu
 
 // Проверка настроек
 module.exports = ( env, option ) => {
-    const production = option.mode === 'production'? true: false;
+    const production    = option.mode === 'production'? true: false;
+    let pluginsOptions  = [];
 
 
 
-    // Поиск шаблонов PUG
-    let pluginsOptions = [];
-    const pages = glob.sync( __dirname + '\\src\\pug\\pages\\**\\*.pug' );
-    pages.forEach( function ( file) {
-        let base    = path.relative( __dirname + '\\src\\pug\\pages', file );
-            base    = base.replace( /\.pug$/, '' );
+    // Поиск страниц PUG
+    {
+        const pages = glob.sync( __dirname + '\\src\\pages\\**\\*.pug' );
+        pages.forEach( function ( file) {
+            let base    = path.relative( __dirname + '\\src\\pages', file );
+                base    = base.replace( /\.pug$/, '' );
 
-        pluginsOptions.push(
-            new HtmlWebpackPlugin({
-                filename: config.output_pages + '/' + base + '.html',
-                template: './src/pug/pages/' + base + '.pug',
-                inject: true
-            })
-        );
-    });
+            pluginsOptions.push(
+                new HtmlWebpackPlugin({
+                    filename: config.output_pages + '/' + base + '.html',
+                    template: './src/pages/' + base + '.pug',
+                    inject: true
+                })
+            );
+        });
+    }
+
+    // Поиск страниц PHP, шапки и подвала PHP
+    {
+        let phpFiles    = [];
+        const pages     = glob.sync( __dirname + '\\src\\pages\\**\\*.php' );
+        pages.forEach( function ( file) {
+            let base    = path.relative( __dirname + '\\src\\pages', file );
+                base    = base.replace( /\.php$/, '' );
+
+            phpFiles.push({
+                from: './src/pages/' + base + '.php',
+                to: './' + config.output_pages + '/' + base + '.php'
+            });
+        });
+
+        // PHP файлы шаблона
+        let files = [ 'header', 'footer' ];
+        for ( key in files ) {
+            let file = files[key];
+            phpFiles.push({
+                from: './src/templates/' + file + '.php',
+                to: './' + config.output_template + '/' + file + '.php'
+            });
+        }
+
+        pluginsOptions.push( new CopyWebpackPlugin ({
+            patterns: phpFiles
+        }));
+    }
 
     // Базовые настройки WebPack
     let webpack_config = {
@@ -77,7 +109,7 @@ module.exports = ( env, option ) => {
             new MiniCssExtractPlugin ({
                 filename: config.output_css + '/' + config.output_css_name + '.css'
             }),
-            ...pluginsOptions
+            ...pluginsOptions,
         ],
         optimization: {
             minimizer: []
