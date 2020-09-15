@@ -14,7 +14,7 @@ let config                      = {};
     // Папка текущего шаблона
     config.output_template      = config.output_templates + '/' + config.teplate_name;
     // Папка для CSS
-    config.output_css           = config.output_template + '/css';
+    config.output_css           = config.output_template + '';
     // Папка для JavaScript
     config.output_js            = config.output_template + '/js';
     // Папка для шрифтов
