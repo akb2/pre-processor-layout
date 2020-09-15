@@ -1,8 +1,8 @@
 // Webpack v4
-const path                  = require('path');
-const dirs                  = require('./dirs.json');
-const ExtractTextPlugin     = require('extract-text-webpack-plugin');
-const MiniCssExtractPlugin  = require('mini-css-extract-plugin');
+const path                      = require('path');
+const dirs                      = require('./dirs.json');
+const MiniCssExtractPlugin      = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin');
 
 let config = {
     entry: { main: './src/app.js' },
@@ -15,22 +15,38 @@ let config = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
-            }, 
+                use: [
+                    'babel-loader'
+                ]
+            },
             {
-                test: /\.css$/,
+                test: /\.(css|scss|sass)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader'
+                    'css-loader',
+                    'sass-loader',
                 ]
             }
         ]
     },
-    plugins: [ 
+    plugins: [
         new MiniCssExtractPlugin({
             filename: dirs.css + '/styles.css'
+        }),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorPluginOptions: {
+                preset: [
+                    'default',
+                    {
+                        discardComments: {
+                            removeAll: true
+                        }
+                    }
+                ]
+            },
+            canPrint: true
         })
     ]
 }
@@ -53,6 +69,6 @@ module.exports = (env, options) => {
 
 
     return config;
-}; 
+};
 
 module.exports = config;
