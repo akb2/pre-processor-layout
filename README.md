@@ -1,4 +1,4 @@
-# pre-processor-layout
+# Описание репозитория
 WebPack сборка для проектов верстки на Bitrix Framework. Включает в себя:
 - Препроцессор для SASS, SCSS
 - Минификация CSS файлов
