@@ -8,6 +8,7 @@ const HtmlWebpackPlugin         = require('html-webpack-plugin');
 const CopyWebpackPlugin         = require('copy-webpack-plugin');
 const getLogger                 = require('webpack-log');
 const log                       = getLogger({ name: 'file' });
+const webpack                   = require('webpack');
 
 const config                    = require('./config');
 
@@ -59,19 +60,24 @@ module.exports = ( env, option ) => {
             });
         });
 
-        // PHP файлы шаблона
-        let files = [ 'header', 'footer' ];
-        for ( key in files ) {
-            let file = files[key];
-            phpFiles.push({
-                from: './src/templates/' + file + '.php',
-                to: './' + config.output_template + '/' + file + '.php'
-            });
-        }
+        // Прочие файлы шаблона
+        const files     = glob.sync( __dirname + '\\src\\templates\\files\\**\\*.php' );
+        files.forEach( function ( file) {
+            let base    = path.relative( __dirname + '\\src\\templates\\files', file );
+                base    = base.replace( /\.php$/, '' );
 
-        pluginsOptions.push( new CopyWebpackPlugin ({
-            patterns: phpFiles
-        }));
+            phpFiles.push({
+                from: './src/templates/files/' + base + '.php',
+                to: './' + config.output_template + '/' + base + '.php'
+            });
+        });
+
+
+        if ( phpFiles.length > 0 ) {
+            pluginsOptions.push( new CopyWebpackPlugin ({
+                patterns: phpFiles
+            }));
+        }
     }
 
     // Базовые настройки WebPack
